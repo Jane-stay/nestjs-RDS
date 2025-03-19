@@ -39,9 +39,11 @@ import { ImagesModule } from './modules/images/images.module';
         entities: [join(__dirname, '/**/*.entity{.ts,.js}')],
         migrations: [join(__dirname, './migrations/**/*{.ts,.js}')],
         synchronize: configService.nodeEnv === 'dev',
-        subscribers: [PostViewSubscriber, CommentSubscriber, UserSubscriber], //
+        subscribers: [PostViewSubscriber, CommentSubscriber, UserSubscriber],
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
-
       inject: [DbConfigService],
     }),
     UsersModule,

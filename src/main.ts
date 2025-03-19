@@ -21,7 +21,7 @@ async function bootstrap() {
     ['/docs'],
     basicAuth({
       users: { admin: 'pw123' },
-      challenge: false,
+      challenge: true,
       unauthorizedResponse: () => 'Unauthorized',
     }),
   );
@@ -40,18 +40,13 @@ async function bootstrap() {
 
   const corsOption = {
     allowHeaders: ['Accept', 'Content-Type', 'Origin', 'Authorization'],
-    origin: [
-      'http://localhost:8000',
-      'http://localhost:8080',
-      'http:0.0.0.0:8000',
-      'http:127.0.0.1:8000',
-    ],
+    origin: '*',
     credential: true,
   };
 
-  app.enableCors(corsOption);
   app.use(cookie());
-  // app.use(csurf({ cookie: true }));
+  // app.use(csurf({cookie: true}));
+  app.enableCors(corsOption);
   app.use(helmet());
   app.setGlobalPrefix('/api/v1', {
     exclude: ['health'],
