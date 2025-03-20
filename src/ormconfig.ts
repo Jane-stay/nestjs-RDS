@@ -30,5 +30,8 @@ export const AppDataSource = new DataSource({
   synchronize: false,
   migrations: [migration],
   logging: true,
+  ssl: {
+    rejectUnauthorized: false,
+  },
   subscribers: [PostViewSubscriber, CommentSubscriber, UserSubscriber],
 });
