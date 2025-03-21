@@ -1,4 +1,4 @@
-  version: 0.2
+version: 0.2
 
 phases:
   install:
@@ -6,13 +6,13 @@ phases:
       nodejs: 22
     commands:
       - echo "Installing dependencies..."
-      - npm install 
+      - npm install
       - npm install -g @nestjs/cli
 
   pre_build:
     commands:
       - echo "Running database migration..."
-      - npm run migration:run 
+      - npm run migration:run
 
   build:
     commands:
@@ -25,9 +25,9 @@ phases:
 
 artifacts:
   files:
-    - '**/*' 
+    - '**/*'
   discard-paths: no
 
 cache:
   paths:
-    - 'node_modules/**/*' 
+    - 'node_modules/**/*'
