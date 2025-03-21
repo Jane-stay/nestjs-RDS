@@ -23,6 +23,7 @@ import { ListAllPostDto } from './dto/list-all-post.dto';
 import { TransformInterceptor } from '../../common/interceptors/transform.interceptor';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { PostRoleGuard } from './guard/post-role.guard';
+import { Express } from 'express';
 
 @ApiTags('포스트 관리')
 @UseGuards(JwtAuthGuard) //jwt 토큰있는지 확인하고,
