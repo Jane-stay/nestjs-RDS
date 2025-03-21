@@ -4,6 +4,10 @@ import { Image } from './entities/image.entity';
 import { S3Service } from '../s3/s3.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Express } from 'express';
+import {Multer} from 'multer';
+
+
+
 
 @Injectable()
 export class ImagesService {
