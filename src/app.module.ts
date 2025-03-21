@@ -40,9 +40,9 @@ import { ImagesModule } from './modules/images/images.module';
         migrations: [join(__dirname, './migrations/**/*{.ts,.js}')],
         synchronize: configService.nodeEnv === 'dev',
         subscribers: [PostViewSubscriber, CommentSubscriber, UserSubscriber],
-        // ssl: {
-        //   rejectUnauthorized: false,
-        // },
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [DbConfigService],
     }),
