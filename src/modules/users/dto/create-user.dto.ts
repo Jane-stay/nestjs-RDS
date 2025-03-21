@@ -1,5 +1,6 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RegisterType } from 'src/common/enum';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -14,7 +15,7 @@ export class CreateUserDto {
     description: '사용자 비밀번호',
   })
   @IsString()
-  password: string;
+  password?: string;
 
   @ApiProperty({
     example: '홍길동',
@@ -22,4 +23,12 @@ export class CreateUserDto {
   })
   @IsString()
   name: string;
+
+  @IsOptional()
+  @IsEnum(RegisterType)
+  registerType: RegisterType = RegisterType.COMMON;
+
+  @IsOptional()
+  @IsString()
+  socialId?: string;
 }

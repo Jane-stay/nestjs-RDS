@@ -10,6 +10,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { PayloadInterface } from './payload.interface';
 import { sign } from 'crypto';
+import { RegisterType } from 'src/common/enum';
 
 @Injectable()
 export class UsersService {
@@ -29,6 +30,14 @@ export class UsersService {
   async findUserByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new UnauthorizedException('유저가 없습니다.');
+    return user;
+  }
+
+  async findUserBySocialId(socialId: string, registerType: RegisterType) {
+    const user = await this.userRepository.findOne({
+      where: { socialId, registerType },
+    });
+    
     return user;
   }
 

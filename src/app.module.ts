@@ -7,7 +7,7 @@ import { AppDataSource } from './ormconfig';
 import { UsersModule } from './modules/users/users.module';
 
 import { AuthModule } from './modules/auth/auth.module';
-import { JwtStrategy } from './modules/auth/jwt.strategy';
+import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
 import { PostsModule } from './modules/posts/posts.module';
 import { WinstonLoggerModule } from './modules/logger/winston-logger.module';
 import { DbConfigModule } from './config/db/config.module';
@@ -40,9 +40,9 @@ import { ImagesModule } from './modules/images/images.module';
         migrations: [join(__dirname, './migrations/**/*{.ts,.js}')],
         synchronize: configService.nodeEnv === 'dev',
         subscribers: [PostViewSubscriber, CommentSubscriber, UserSubscriber],
-        ssl: {
-          rejectUnauthorized: false,
-        },
+        // ssl: {
+        //   rejectUnauthorized: false,
+        // },
       }),
       inject: [DbConfigService],
     }),

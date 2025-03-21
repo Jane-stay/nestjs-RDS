@@ -11,3 +11,10 @@ export enum UserRole {
   ADMIN = 'admin',
   COMMON = 'common',
 }
+
+export enum RegisterType {
+  GOOGLE = 'google',
+  NAVER = 'naver',
+  KAKAO = 'kakao',
+  COMMON = 'common',
+}

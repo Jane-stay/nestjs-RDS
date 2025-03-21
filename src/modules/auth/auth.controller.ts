@@ -21,9 +21,10 @@ import { RequestOrigin } from '../../decorators/request-origin.decorator';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Sign } from 'crypto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RequestUser } from '../../decorators/request-user.decorator';
 import { User } from '../users/entities/user.entity';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
 
 @ApiTags('유저인증')
 @Controller('auth')
@@ -50,13 +51,37 @@ export class AuthController {
   ) {
     const { accessToken, accessOption, refreshToken, refreshOption } =
       await this.authService.logIn(loginDto, origin);
-    console.log(1, accessToken);
+
     res.cookie('Authentication', accessToken, accessOption);
     res.cookie('Refresh', refreshToken, refreshOption);
     return res.json({
       message: '로그인성공!',
       accessToken: accessToken,
       refreshToken: refreshToken,
+    });
+  }
+
+  @Get('login/google')
+  @UseGuards(GoogleAuthGuard)
+  googleLogin() {}
+
+  @Get('login/google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleCallback(
+    @RequestUser() user: User,
+    @RequestOrigin() origin: string,
+    @Res() res: Response,
+  ) {
+    const { accessToken, accessOption, refreshToken, refreshOption } =
+      await this.authService.googleLogin(user.email, origin);
+
+    res.cookie('Authentication', accessToken, accessOption);
+    res.cookie('Refresh', refreshToken, refreshOption);
+
+    return res.json({
+      message: '로그인성공!',
+      accessToken,
+      refreshToken,
     });
   }
 

@@ -29,17 +29,9 @@ export class AuthService {
     if (!(await comparePassword(password, user.password))) {
       throw new BadRequestException('Password 가 틀렸습니다');
     }
-    const { accessToken, accessOption } = await this.setJwtAccessToken(
-      email,
-      requestDomain,
-    );
-    const { refreshToken, refreshOption } = this.setJwtRefreshToken(
-      email,
-      requestDomain,
-    );
-    return { accessToken, accessOption, refreshToken, refreshOption };
+    return this.makeJwtToken(loginDto.email, requestDomain);
   }
-  async setJwtAccessToken(email: string, requestDomain: string) {
+  setJwtAccessToken(email: string, requestDomain: string) {
     const payload = { sub: email };
     const maxAge = 1 * 24 * 60 * 60 * 1000;
     const token = this.JwtService.sign(payload, {
@@ -94,4 +86,17 @@ export class AuthService {
   // async uploadProfile(file: Express.Multer.File) {
   //   await this.s3Service.uploadFile(file, 'user-profile');
   // }
+  async googleLogin(email: string, origin: string) {
+    return this.makeJwtToken(email, origin);
+  }
+
+  makeJwtToken(email: string, origin: string) {
+    const { accessToken, accessOption } = this.setJwtAccessToken(email, origin);
+    const { refreshToken, refreshOption } = this.setJwtRefreshToken(
+      email,
+      origin,
+    );
+
+    return { accessToken, accessOption, refreshToken, refreshOption };
+  }
 }
