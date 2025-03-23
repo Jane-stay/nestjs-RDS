@@ -25,6 +25,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { PostRoleGuard } from './guard/post-role.guard';
 import { Express } from 'express';
 import { Multer } from 'multer';
+import { Request } from 'express';
 
 @ApiTags('포스트 관리')
 @UseGuards(JwtAuthGuard) //jwt 토큰있는지 확인하고,
@@ -50,7 +51,7 @@ export class PostsController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  upload(@UploadedFile() file: Express.Multer.File) {
+  upload(@UploadedFile() file: Request['file']) {
     console.log(file);
     return {
       file,

@@ -4,10 +4,8 @@ import { Image } from './entities/image.entity';
 import { S3Service } from '../s3/s3.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Express } from 'express';
-import {Multer} from 'multer';
-
-
-
+import { Multer } from 'multer';
+import { Request } from 'express';
 
 @Injectable()
 export class ImagesService {
@@ -17,9 +15,9 @@ export class ImagesService {
     private s3Service: S3Service,
   ) {}
 
-  async uploadImage(file: Express.Multer.File) {
+  async uploadImage(file: Request['file']) {
     const filePath = 'image';
-    const resultUrl = await this.s3Service.uploadFile(file, filePath);
+    const resultUrl = await this.s3Service.uploadFile(file!, filePath);
     const image = this.imageRepository.create({
       imageUrl: resultUrl,
       filePath,

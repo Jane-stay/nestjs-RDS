@@ -13,7 +13,7 @@ import { ImageUploadDto } from './dto/image-upload.dto';
 import { Express } from 'express';
 import { Request } from 'express';
 import {Multer} from 'multer';
-import { File } from 'multer';
+
 
 
 @ApiTags('image')
@@ -39,7 +39,10 @@ export class ImagesController {
     },
   })
   @Post('upload')
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
+  uploadImage(@UploadedFile() file: Request['file']) {
+    if(!file){
+      throw new Error;
+    }
     return this.imagesService.uploadImage(file);
   }
 }

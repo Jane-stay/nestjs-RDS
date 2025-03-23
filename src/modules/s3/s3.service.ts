@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { AwsConfigService } from '../../config/aws/config.service';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Express } from 'express';
-import {Multer} from 'multer';
+import { Multer } from 'multer';
+import { Request } from 'express';
 
 @Injectable()
 export class S3Service {
@@ -17,7 +18,10 @@ export class S3Service {
       },
     });
   }
-  async uploadFile(file: Express.Multer.File, dirPath: string) {
+  async uploadFile(file: Request['file'], dirPath: string) {
+    if (!file) {
+      throw new Error();
+    }
     // const fileName = Date.now().toString();
     const fileName = `${Date.now()}-${file.originalname}`;
     // const fileName = `${dirPath}/${Date.now()}`;
