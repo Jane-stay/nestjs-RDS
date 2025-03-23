@@ -13,6 +13,7 @@ import { ImageUploadDto } from './dto/image-upload.dto';
 import { Express } from 'express';
 import { Request } from 'express';
 import {Multer} from 'multer';
+import { File } from 'multer';
 
 
 @ApiTags('image')
