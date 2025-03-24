@@ -15,7 +15,7 @@ export class ImagesService {
     private s3Service: S3Service,
   ) {}
 
-  async uploadImage(file: Request['file']) {
+  async uploadImage(file: Express.Multer.File) {
     const filePath = 'image';
     const resultUrl = await this.s3Service.uploadFile(file!, filePath);
     const image = this.imageRepository.create({

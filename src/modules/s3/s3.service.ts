@@ -3,7 +3,7 @@ import { AwsConfigService } from '../../config/aws/config.service';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Express } from 'express';
 import { Multer } from 'multer';
-import { Request } from 'express';
+
 
 @Injectable()
 export class S3Service {
@@ -18,7 +18,7 @@ export class S3Service {
       },
     });
   }
-  async uploadFile(file: Request['file'], dirPath: string) {
+  async uploadFile(file: Express.Multer.File, dirPath: string) {
     if (!file) {
       throw new Error();
     }

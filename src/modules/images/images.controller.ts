@@ -12,9 +12,7 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { ImageUploadDto } from './dto/image-upload.dto';
 import { Express } from 'express';
 import { Request } from 'express';
-import {Multer} from 'multer';
-
-
+import { Multer } from 'multer';
 
 @ApiTags('image')
 @Controller('images')
@@ -39,9 +37,9 @@ export class ImagesController {
     },
   })
   @Post('upload')
-  uploadImage(@UploadedFile() file: Request['file']) {
-    if(!file){
-      throw new Error;
+  uploadImage(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new Error();
     }
     return this.imagesService.uploadImage(file);
   }
