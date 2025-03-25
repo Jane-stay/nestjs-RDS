@@ -14,7 +14,8 @@ npm run build
 
 # pm2 사용하여 애플리케이션 시작
 npm install -g pm2
-pm2 start dist/main.js --name $APP_NAME
+pm2 delete $APP_NAME || true
+pm2 start dist/src/main.js --name $APP_NAME
 pm2 status
 
 
